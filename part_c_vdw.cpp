@@ -21,6 +21,10 @@ int main() {
         v_old = v;
         double f = (P + a / pow(v, 2)) * (v - b) - (R * T);
         double df = P - (a / pow(v, 2)) + (2.0 * a * b / pow(v, 3));
+        if (abs(df) < 1e-12) { 
+        cout << "Error: Derivative near zero. Solver cannot continue." << endl;
+        return 1; // Exit the program with an error code
+    }
         v = v_old - (f / df);
         diff = abs(v - v_old);
     }
@@ -29,4 +33,5 @@ int main() {
     cout << fixed << setprecision(8) << "Volume: " << v << " L/mol" << endl;
     cout << "Iterations: " << iters << "\nTime: " << chrono::duration<double>(end-start).count() << " s" << endl;
     return 0;
+
 }
